@@ -1,4 +1,4 @@
-package ranking
+package price
 
 import (
 	"encoding/json"
@@ -20,7 +20,11 @@ type TickerData struct {
 	Quotes map[string]Quote `json:"quotes"`
 }
 
-func GetPriceMap(start string, limit string) (map[string]float64, error) {
+type PriceMap struct {
+	PriceMap map[string]float64 `json:"pricemap"`
+}
+
+func GetPriceMap(start string, limit string) (*PriceMap, error) {
 	url := fmt.Sprintf("https://api.coinmarketcap.com/v2/ticker/?start=%s&limit=%s", start, limit)
 	resp, err := http.Get(url)
 	if err != nil {
@@ -36,9 +40,11 @@ func GetPriceMap(start string, limit string) (map[string]float64, error) {
 	if err != nil {
 		return nil, err
 	}
-	result := make(map[string]float64)
+	var result PriceMap
+	result.PriceMap = make(map[string]float64)
 	for _, data := range ticker.Data {
-		result[data.Symbol] = data.Quotes["USD"].Price
+		result.PriceMap[data.Symbol] = data.Quotes["USD"].Price
 	}
-	return result, nil
+
+	return &result, nil
 }

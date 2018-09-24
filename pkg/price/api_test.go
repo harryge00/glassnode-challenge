@@ -1,24 +1,24 @@
-package ranking
+package price
 
 import (
 	"testing"
 )
 
 func TestGetPrice(t *testing.T) {
-	ranking, err := GetPriceMap("", "10")
+	priceMap, err := GetPriceMap("", "10")
 	if err != nil {
 		t.Error(err)
 	}
-	t.Log(ranking)
-	if len(ranking) != 10 {
-		t.Fatalf("Lenght of rankingData should be 10, but is %v", len(ranking))
+	t.Log(priceMap.PriceMap)
+	if len(priceMap.PriceMap) != 10 {
+		t.Fatalf("Lenght of priceMap should be 10, but is %v", len(priceMap.PriceMap))
 	}
-	ranking, err = GetPriceMap("101", "20")
+	priceMap, err = GetPriceMap("101", "20")
 	if err != nil {
 		t.Error(err)
 	}
-	t.Log(ranking)
-	if len(ranking) != 20 {
-		t.Fatalf("Lenght of rankingData should be 20, but is %v", len(ranking))
+	t.Log(priceMap)
+	if len(priceMap.PriceMap) != 20 {
+		t.Fatalf("Lenght of priceMap should be 20, but is %v", len(priceMap.PriceMap))
 	}
 }
